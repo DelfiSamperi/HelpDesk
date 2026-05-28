@@ -46,15 +46,16 @@ def insert_ticket_to_db(ticket):
     
     conn = get_connection()
     cursor = conn.cursor()
-
+    
+    #creo el ticket
     cursor.execute("""
         INSERT INTO ticket (
-                   title,
-                   description,
-                   priority,
-                   created_by,
-                   category_id
-                )
+            title,
+            description,
+            priority,
+            created_by,
+            category_id
+        )
         VALUES (%s, %s, %s, %s, %s)
         RETURNING *
     """, (
@@ -66,7 +67,27 @@ def insert_ticket_to_db(ticket):
     ))
     
     new_ticket = cursor.fetchone()
+
+    print("ticket creado:")
+    print(new_ticket)
+
+    #creo el comment inciial automaticamente (description)
+    cursor.execute("""
+        INSERT INTO comments (
+            ticket_id,
+            created_by,
+            message
+        )
+        VALUES (%s, %s, %s)
+    """, (
+    new_ticket[0], #id del ticket recien creado
+    ticket.created_by,
+    ticket.description
+    ))
+
+    print("comment incial creado")
     
+    #confirma transaccion
     conn.commit() #obligatorio en insert-update-delete
 
     cursor.close()
