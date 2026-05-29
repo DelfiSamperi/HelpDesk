@@ -35,7 +35,7 @@ def insert_user(user_name, email, hashed_password):
 
 
 #login
-def get_user_by_email(email):
+def fetch_user_by_email(email):
 
     conn = get_connection()
     cursor = conn.cursor()

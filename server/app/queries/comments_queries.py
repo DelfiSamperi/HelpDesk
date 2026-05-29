@@ -1,19 +1,10 @@
 from app.db.connection import get_connection
 
-def fetch_all_comments(ticket_id):
+def fetch_comments_by_ticket(ticket_id):
 
     conn = get_connection()
     cursor = conn.cursor()
     
-    #una rutita bien general
-    # cursor.execute("""
-    #     SELECT *
-    #     FROM comments
-    #     WHERE ticket_id = %s
-    #     ORDER BY created_at ASC
-    # """, (ticket_id,))
-    
-    #ahora una ruta seria
     cursor.execute("""
         SELECT
             comments.id,
@@ -29,8 +20,7 @@ def fetch_all_comments(ticket_id):
 """, (ticket_id,))
 
     comments = cursor.fetchall()
-    #log temporal para ver que trae en consola
-    print("query que trae comments")
+    
     print(comments)
 
     cursor.close()
@@ -60,7 +50,6 @@ def insert_comment(ticket_id, comment):
     
     new_comment = cursor.fetchone()
     
-    print("query comment creado:")
     print(new_comment)
 
     conn.commit() #obligatorio en insert-update-delete

@@ -12,8 +12,7 @@ def fetch_all_tickets():
     """)
     
     tickets = cursor.fetchall()
-    #log temporal para ver que trae en consola
-    print("query trae todos los tickets")
+    
     print(tickets)
 
     cursor.close()
@@ -34,8 +33,7 @@ def fetch_ticket_by_id(id):
     """, (id,))
     
     ticket = cursor.fetchone()
-    #log temporal para ver que trae en consola
-    print("query traer ticket by id")
+        
     print(ticket)
 
     cursor.close()
@@ -44,12 +42,11 @@ def fetch_ticket_by_id(id):
     return ticket
 
 
-def insert_ticket_to_db(ticket):
+def insert_ticket(ticket):
     
     conn = get_connection()
     cursor = conn.cursor()
     
-    #creo el ticket
     cursor.execute("""
         INSERT INTO ticket (
             title,
@@ -70,7 +67,6 @@ def insert_ticket_to_db(ticket):
     
     new_ticket = cursor.fetchone()
 
-    print("aca estamos en la query, ticket creado:")
     print(new_ticket)
 
     #creo el comment inicial automaticamente (description)
@@ -82,13 +78,11 @@ def insert_ticket_to_db(ticket):
         )
         VALUES (%s, %s, %s)
     """, (
-    new_ticket["id"], #id del ticket recien creado
+    new_ticket["id"], 
     ticket.created_by,
     ticket.description
     ))
 
-    print("comment incial creado")
-    
     #confirma transaccion
     conn.commit() #obligatorio en insert-update-delete
 
@@ -98,12 +92,10 @@ def insert_ticket_to_db(ticket):
     return new_ticket
 
 
-def update_ticket_to_db(id, ticket):
+def update_ticket(id, ticket):
     
     conn = get_connection()
     cursor = conn.cursor()
-
-    print("query update ticket")
 
     fields = []
     values = []

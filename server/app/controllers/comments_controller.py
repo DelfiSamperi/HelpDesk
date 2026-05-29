@@ -1,12 +1,8 @@
-from app.queries.comments_queries import (
-    fetch_all_comments,
-    insert_comment
-)
+from app.queries.comments_queries import fetch_comments_by_ticket, insert_comment
 
-# GET
 def get_ticket_comments(ticket_id):
 
-    comments = fetch_all_comments(ticket_id)
+    comments = fetch_comments_by_ticket(ticket_id)
 
     return {
         "ok": True,
@@ -14,8 +10,7 @@ def get_ticket_comments(ticket_id):
     }
 
 
-# POST
-def post_new_comment(ticket_id, comment):
+def create_comment(ticket_id, comment):
 
     new_comment = insert_comment(ticket_id, comment)
 
