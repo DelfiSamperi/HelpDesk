@@ -30,6 +30,7 @@ def fetch_all_comments(ticket_id):
 
     comments = cursor.fetchall()
     #log temporal para ver que trae en consola
+    print("query que trae comments")
     print(comments)
 
     cursor.close()
@@ -59,6 +60,9 @@ def insert_comment(ticket_id, comment):
     
     new_comment = cursor.fetchone()
     
+    print("query comment creado:")
+    print(new_comment)
+
     conn.commit() #obligatorio en insert-update-delete
 
     cursor.close()

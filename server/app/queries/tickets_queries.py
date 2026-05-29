@@ -13,6 +13,7 @@ def fetch_all_tickets():
     
     tickets = cursor.fetchall()
     #log temporal para ver que trae en consola
+    print("query trae todos los tickets")
     print(tickets)
 
     cursor.close()
@@ -34,6 +35,7 @@ def fetch_ticket_by_id(id):
     
     ticket = cursor.fetchone()
     #log temporal para ver que trae en consola
+    print("query traer ticket by id")
     print(ticket)
 
     cursor.close()
@@ -68,7 +70,7 @@ def insert_ticket_to_db(ticket):
     
     new_ticket = cursor.fetchone()
 
-    print("ticket creado:")
+    print("aca estamos en la query, ticket creado:")
     print(new_ticket)
 
     #creo el comment inciial automaticamente (description)
@@ -80,7 +82,7 @@ def insert_ticket_to_db(ticket):
         )
         VALUES (%s, %s, %s)
     """, (
-    new_ticket[0], #id del ticket recien creado
+    new_ticket["id"], #id del ticket recien creado
     ticket.created_by,
     ticket.description
     ))
@@ -101,7 +103,7 @@ def update_ticket_to_db(id, ticket):
     conn = get_connection()
     cursor = conn.cursor()
 
-    print("aca entro a la query")
+    print("query update ticket")
 
     fields = []
     values = []
@@ -135,6 +137,7 @@ def update_ticket_to_db(id, ticket):
     """
     values.append(id) #agrega id al final
 
+    print('ticket updated:')
     print(query)
     print(values)
 
