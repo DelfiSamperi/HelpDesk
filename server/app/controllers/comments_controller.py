@@ -1,7 +1,7 @@
 from app.queries.comments_queries import (
     fetch_all_comments,
     insert_comment
-) 
+)
 
 # GET
 def get_ticket_comments(ticket_id):

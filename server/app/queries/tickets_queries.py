@@ -73,7 +73,7 @@ def insert_ticket_to_db(ticket):
     print("aca estamos en la query, ticket creado:")
     print(new_ticket)
 
-    #creo el comment inciial automaticamente (description)
+    #creo el comment inicial automaticamente (description)
     cursor.execute("""
         INSERT INTO comments (
             ticket_id,
