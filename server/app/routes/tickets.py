@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from app.controllers.tickets_controller import (
     get_all_tickets,
     get_ticket_by_id,
@@ -6,6 +6,7 @@ from app.controllers.tickets_controller import (
     update_ticket
 )
 from app.schemas.ticket_schema import TicketCreate, TicketUpdate 
+from app.utils.dependencies import get_current_user
 
 router = APIRouter(prefix="/tickets")
 
@@ -22,13 +23,16 @@ def get_ticket(id: str):
 
 
 @router.post("/")
-def post_ticket(ticket: TicketCreate):
-    
-    return create_ticket(ticket)
+def post_ticket(
+    ticket: TicketCreate,
+    current_user = Depends(get_current_user)
+):
+    print(current_user)
+    return create_ticket(ticket, current_user["sub"])
 
 
 @router.put("/{id}")
-def update_ticket_route(id: str, ticket: TicketUpdate):
+def update_ticket_route(id: str, ticket: TicketUpdate, current_user = Depends(get_current_user)):
 
-    return update_ticket(id, ticket)
+    return update_ticket(id, ticket, current_user["sub"])
 

@@ -1,6 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from app.controllers.auth_controller import register_user, login_user
 from app.schemas.auth_schema import UserCreate, UserLogin
+from app.utils.dependencies import get_current_user
 
 router = APIRouter(prefix="/auth")
 
@@ -14,3 +15,11 @@ def user_register(user: UserCreate):
 def user_login(user: UserLogin):
 
     return login_user(user)
+
+
+# aca estamos probando JWT
+@router.get("/me")
+def me(current_user = Depends(get_current_user)):
+
+    return current_user
+

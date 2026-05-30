@@ -42,7 +42,7 @@ def fetch_ticket_by_id(id):
     return ticket
 
 
-def insert_ticket(ticket):
+def insert_ticket(ticket, user_id):
     
     conn = get_connection()
     cursor = conn.cursor()
@@ -61,7 +61,7 @@ def insert_ticket(ticket):
         ticket.title,
         ticket.description,
         ticket.priority,
-        ticket.created_by,
+        user_id,
         ticket.category_id
     ))
     
@@ -79,7 +79,7 @@ def insert_ticket(ticket):
         VALUES (%s, %s, %s)
     """, (
     new_ticket["id"], 
-    ticket.created_by,
+    user_id,
     ticket.description
     ))
 
@@ -92,7 +92,7 @@ def insert_ticket(ticket):
     return new_ticket
 
 
-def update_ticket(id, ticket):
+def update_ticket_db(id, ticket):
     
     conn = get_connection()
     cursor = conn.cursor()

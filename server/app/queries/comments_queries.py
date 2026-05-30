@@ -29,7 +29,7 @@ def fetch_comments_by_ticket(ticket_id):
     return comments
 
 
-def insert_comment(ticket_id, comment):
+def insert_comment(ticket_id, comment, user_id):
     
     conn = get_connection()
     cursor = conn.cursor()
@@ -44,7 +44,7 @@ def insert_comment(ticket_id, comment):
         RETURNING *
     """, (
         ticket_id,
-        comment.created_by,
+        user_id,
         comment.message
     ))
     

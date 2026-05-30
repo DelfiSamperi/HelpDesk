@@ -10,9 +10,9 @@ def get_ticket_comments(ticket_id):
     }
 
 
-def create_comment(ticket_id, comment):
+def create_comment(ticket_id, comment, user_id):
 
-    new_comment = insert_comment(ticket_id, comment)
+    new_comment = insert_comment(ticket_id, comment, user_id)
 
     return {
         "ok": True,

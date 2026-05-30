@@ -2,7 +2,7 @@ from app.queries.tickets_queries import (
     fetch_all_tickets,
     fetch_ticket_by_id,
     insert_ticket,
-    update_ticket
+    update_ticket_db
 ) 
 
 
@@ -26,9 +26,9 @@ def get_ticket_by_id(id):
     }
 
 
-def create_ticket(ticket):
+def create_ticket(ticket, user_id):
 
-    new_ticket = insert_ticket(ticket)
+    new_ticket = insert_ticket(ticket, user_id)
 
     return {
         "ok": True,
@@ -38,7 +38,7 @@ def create_ticket(ticket):
 
 def update_ticket(id, ticket):
     
-    ticket_updated = update_ticket(id, ticket)
+    ticket_updated = update_ticket_db(id, ticket)
 
     return {
         "ok": True,

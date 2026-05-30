@@ -1,5 +1,9 @@
 from app.queries.auth_queries import insert_user, fetch_user_by_email
-from app.utils.auth import hash_password, verify_password
+from app.utils.auth import (
+    hash_password,
+    verify_password,
+    create_access_token
+)
 
 def register_user(user):
 
@@ -40,11 +44,17 @@ def login_user(user):
             "message": "Invalid credentials"
         }
     
+    token = create_access_token({
+        "sub": str(existing_user["id"]),
+        "role": existing_user["user_role"]
+    })
+    
     return {
         "ok": True,
-        "message": "Login successful",
+        "access_token": token,
+        "token_type": "bearer",
         "user": {
-            "id": existing_user["id"],
+            "id": str(existing_user["id"]),
             "user_name": existing_user["user_name"],
             "email": existing_user["email"],
             "role": existing_user["user_role"]

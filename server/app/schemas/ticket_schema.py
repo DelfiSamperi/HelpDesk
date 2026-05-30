@@ -20,7 +20,6 @@ class TicketCreate(BaseModel):
     title: str
     description: str
     priority: PriorityEnum
-    created_by: UUID
     category_id: Optional[int] = None
 
 
