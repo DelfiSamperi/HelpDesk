@@ -39,13 +39,15 @@ def fetch_all_users():
             user_name,
             email,
             user_role,
-            active
+            active,
             created_at
         FROM users
         ORDER BY created_at DESC
     """)
 
     users = cursor.fetchall()
+
+    print(users)
     
     cursor.close()
     conn.close()
@@ -60,19 +62,20 @@ def fetch_user_by_id(id):
 
     cursor.execute("""
         SELECT
-            SELECT
             id,
             user_name,
             email,
             user_role,
-            active
+            active,
             created_at
         FROM users
         WHERE id = %s
     """, (id,))
     
     user_id = cursor.fetchone()
-        
+
+    print(user_id)
+
     cursor.close()
     conn.close()
 
