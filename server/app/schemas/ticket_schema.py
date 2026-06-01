@@ -29,7 +29,5 @@ class TicketUpdate(BaseModel):
     assigned_to: Optional[UUID] = None
     category_id: Optional[int] = None
 
-
-
    
     

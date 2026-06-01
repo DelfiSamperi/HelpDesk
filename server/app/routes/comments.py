@@ -3,7 +3,10 @@ from app.controllers.comments_controller import create_comment, get_ticket_comme
 from app.schemas.comments_schema import CommentCreate
 from app.utils.dependencies import get_current_user
 
-router = APIRouter(prefix="/tickets")
+router = APIRouter(
+    prefix="/tickets",
+    tags=["Tickets"]
+    )
 
 @router.post("/{ticket_id}/comments")
 def post_comment(ticket_id: str, comment: CommentCreate, current_user = Depends(get_current_user)):

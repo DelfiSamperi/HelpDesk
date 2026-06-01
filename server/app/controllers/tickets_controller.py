@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from app.queries.tickets_queries import (
     fetch_all_tickets,
     fetch_ticket_by_id,
@@ -6,9 +7,12 @@ from app.queries.tickets_queries import (
 ) 
 
 
-def get_all_tickets():
+def get_all_tickets(current_user):
 
-    tickets = fetch_all_tickets()
+    role = current_user["role"]
+    user_id = current_user["sub"]
+
+    tickets = fetch_all_tickets(role, user_id)
 
     return {
         "ok": True,
@@ -16,13 +20,32 @@ def get_all_tickets():
     }
 
 
-def get_ticket_by_id(id):
+def get_ticket_by_id(id, current_user):
 
-    ticketById = fetch_ticket_by_id(id)
+    ticket_by_id = fetch_ticket_by_id(id)
+
+    if not ticket_by_id:
+
+        raise HTTPException(
+            status_Code=404,
+            detail="Ticket not found"
+        )
+    
+    role = current_user["role"]
+    user_id = current_user["sub"]
+
+    if role == "user":
+
+        if str(ticket_by_id["created_by"]) != user_id:
+
+            raise HTTPException(
+                status_code=403,
+                detail="Not enough permissions"
+            )
 
     return {
         "ok": True,
-        "data": ticketById
+        "data": ticket_by_id
     }
 
 
@@ -36,7 +59,7 @@ def create_ticket(ticket, user_id):
     }
 
 
-def update_ticket(id, ticket):
+def update_ticket(id, ticket, user_id):
     
     ticket_updated = update_ticket_db(id, ticket)
 

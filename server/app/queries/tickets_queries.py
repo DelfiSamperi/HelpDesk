@@ -1,20 +1,29 @@
 from app.db.connection import get_connection
 
-def fetch_all_tickets():
+def fetch_all_tickets(role, user_id):
 
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute("""
-        SELECT *
-        FROM ticket
-        ORDER BY created_at DESC
-    """)
+    if role in ["tech", "admin"]:
+
+        cursor.execute("""
+            SELECT *
+            FROM ticket
+            ORDER BY created_at DESC
+        """)
+
+    else:
+
+        cursor.execute("""
+            SELECT *
+            FROM ticket
+            WHERE created_by = %s
+            ORDER BY created_at DESC
+        """, (user_id,))
     
     tickets = cursor.fetchall()
     
-    print(tickets)
-
     cursor.close()
     conn.close()
 
@@ -34,8 +43,6 @@ def fetch_ticket_by_id(id):
     
     ticket = cursor.fetchone()
         
-    print(ticket)
-
     cursor.close()
     conn.close()
 

@@ -1,0 +1,41 @@
+from fastapi import APIRouter, Depends
+from app.schemas.user_schema import UserRoleUpdate
+from app.controllers.users_controller import (
+    change_user_role,
+    all_users,
+    user_by_id
+)
+from app.utils.dependencies import require_role
+
+
+router = APIRouter(
+    prefix="/users",
+    tags=["Users"]
+)
+
+# ruta cambio de rol
+@router.patch("/{user_id}/role")
+def change_role(
+    user_id: str,
+    role_data: UserRoleUpdate,
+    current_user = Depends(require_role(["admin"]))
+):
+    return change_user_role(user_id, role_data.role)
+
+
+@router.get("/")
+def get_users(
+    current_user = Depends(require_role(["admin"]))
+):
+
+    return all_users()
+
+
+@router.get("/{id}")
+def get_user_by_id(
+    id: str,
+    current_user = Depends(require_role(["admin"]))
+):
+
+    return user_by_id(id)
+
