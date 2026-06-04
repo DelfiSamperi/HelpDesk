@@ -25,10 +25,12 @@ def change_role(
 
 @router.get("/")
 def get_users(
+    page: int = 1,
+    limit: int= 12,
     current_user = Depends(require_role(["admin"]))
 ):
 
-    return all_users()
+    return all_users(page, limit)
 
 
 @router.get("/{id}")

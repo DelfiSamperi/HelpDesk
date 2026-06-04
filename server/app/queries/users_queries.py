@@ -28,7 +28,7 @@ def update_user_role(user_id, role):
     return user_role
 
 
-def fetch_all_users():
+def fetch_all_users(limit, offset):
     
     conn = get_connection()
     cursor = conn.cursor()
@@ -43,7 +43,12 @@ def fetch_all_users():
             created_at
         FROM users
         ORDER BY created_at DESC
-    """)
+        LIMIT %s
+        OFFSET %s
+    """, (
+        limit,
+        offset
+    ))
 
     users = cursor.fetchall()
 
@@ -53,6 +58,25 @@ def fetch_all_users():
     conn.close()
 
     return users
+
+
+def count_users():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM users
+    """
+    )
+
+    total_users = cursor.fetchone()["count"]
+
+    cursor.close()
+    conn.close()
+
+    return total_users
 
 
 def fetch_user_by_id(id):
