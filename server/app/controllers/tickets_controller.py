@@ -4,7 +4,7 @@ from app.queries.tickets_queries import (
     fetch_all_tickets,
     count_tickets,
     fetch_ticket_by_id,
-    insert_ticket,
+    create_ticket_in_db,
     update_ticket_db,
     fetch_ticket_history
 ) 
@@ -80,7 +80,7 @@ def get_ticket_history_by_id(ticket_id, current_user):
 
 def create_ticket(ticket, user_id):
 
-    new_ticket = insert_ticket(ticket, user_id)
+    new_ticket = create_ticket_in_db(ticket, user_id)
 
     return {
         "ok": True,

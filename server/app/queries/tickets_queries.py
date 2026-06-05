@@ -53,7 +53,7 @@ def count_tickets(role, user_id,):
     else:
 
         cursor.execute("""
-            SELECT *
+            SELECT count(*)
             FROM ticket
             WHERE created_by = %s
         """, (user_id,))
@@ -85,7 +85,7 @@ def fetch_ticket_by_id(id):
     return ticket
 
 
-def insert_ticket(ticket, user_id):
+def create_ticket_in_db(ticket, user_id):
     
     conn = get_connection()
     cursor = conn.cursor()

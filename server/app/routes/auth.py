@@ -9,13 +9,32 @@ router = APIRouter(
     tags=["Auth"]
 )
 
-@router.post("/register")
+@router.post(
+    "/register",
+    summary="User registration",
+    description="""
+    Creates a new user account.
+
+    - New users are assigned the 'user' role by default.
+    - User roles can only be changed by administrators.
+    - Passwords are securely hashed before storage.
+    - Duplicate email addresses are not allowed.
+    """    
+)
 def user_register(user: UserCreate):
     
     return register_user(user)
 
 
-@router.post("/login")
+@router.post(
+    "/login",
+    summary="User authentication",
+    description="""
+    Autenticates user throw email and password.
+
+    Returns a JWT access token that must be included in the Authorization header for protected routes.
+    """    
+)
 def user_login(user: UserLogin):
 
     return login_user(user)
