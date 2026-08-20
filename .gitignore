@@ -1,6 +1,54 @@
-venv/
-.env
-__pycache__
-*.pyc
+# ================
+# Server
+# ================
 
-prueba_rutas.py
+server/venv/
+server/__pycache__/
+server/**/*.pyc
+
+server/.env
+server/prueba_rutas.py
+
+
+# ================
+# FrontEnd
+# ================
+
+HelpDesk_App/node_modules/
+HelpDesk_App/dist/
+HelpDesk_App/dist-ssr/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+*.local
+
+
+# ================
+# Environment
+# ================
+
+.env
+.env.*
+!.env.example
+
+
+# ================
+# Editor directories and files
+# ================
+
+.idea/
+.DS_Store
+
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
+# Keep project VS Code settings if tracked
+# .vscode/
